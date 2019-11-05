@@ -15,4 +15,10 @@ private final EntityManager manager;
     public void create(Message message) {
         manager.persist(message);
     }
+
+    public Message findByMessage(String message) {
+        return manager.createQuery("FROM Message where message = :message", Message.class)
+                .setParameter("message", message)
+                .getSingleResult();
+    }
 }
