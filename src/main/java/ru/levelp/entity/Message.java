@@ -9,13 +9,14 @@ public class Message {
     @GeneratedValue
     private long id;
 
-    @Column
+    @Column(nullable = false, length = 250)
     private String message;
 
     @ManyToOne
     private Topic topic;
 
-    public Message() {}
+    public Message() {
+    }
 
     public Message(String message, Topic topic) {
         this.message = message;

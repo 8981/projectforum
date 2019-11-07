@@ -1,6 +1,7 @@
 package ru.levelp.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -9,25 +10,26 @@ public class User {
     @GeneratedValue
     private long id;
 
-    @Column(length = 50, nullable = false, unique = true)
-    private String userName;
-
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(nullable = false, length = 50, unique = true)
     private String login;
 
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(nullable = false, length = 50, unique = true)
     private String password;
 
-    @ManyToOne
-    private Topic topic;
+    @Column(length = 20, unique = true)
+    private String nicName;
 
-    public User() {}
+    @OneToMany
+    private List<Topic> topics;
 
-    public User(String userName, String login, String password, Topic topic) {
-        this.userName = userName;
+    public User() {
+    }
+
+    public User(String login, String password, String nicName, List<Topic> topics) {
         this.login = login;
         this.password = password;
-        this.topic = topic;
+        this.nicName = nicName;
+        this.topics = topics;
     }
 
     public long getId() {
@@ -36,14 +38,6 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getLogin() {
@@ -62,11 +56,19 @@ public class User {
         this.password = password;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public String getNicName() {
+        return nicName;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
+    public void setNicName(String nicName) {
+        this.nicName = nicName;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
     }
 }

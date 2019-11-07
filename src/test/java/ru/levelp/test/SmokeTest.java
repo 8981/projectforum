@@ -32,7 +32,7 @@ public class SmokeTest {
     @Test
     public void testCreateUser() throws Exception {
         User user = new User();
-        user.setUserName("John Black");
+        user.setNicName("John Black");
         user.setLogin("login");
         user.setPassword("1234");
 

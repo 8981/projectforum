@@ -2,12 +2,13 @@ package ru.levelp.dao;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.levelp.entity.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 
 import static org.junit.Assert.*;
@@ -34,14 +35,16 @@ public class UserDAOTest {
         }
     }
 
+
+
     @Test
     public void create() {
         User user = new User();
         manager.getTransaction().begin();
         try {
-            user.setUserName("John Black");
             user.setLogin("login");
             user.setPassword("1234");
+            user.setNicName("Black");
             dao.create(user);
             manager.getTransaction().commit();
         } catch (Exception e) {
@@ -52,28 +55,27 @@ public class UserDAOTest {
     }
 
     @Test
-    public void findByUserNameLoginAndPassword() {
+    public void findByLoginAndPasswordAndNicName() {
         User user = new User();
         manager.getTransaction().begin();
         try {
-            user.setUserName("John Black");
-            user.setLogin("login1");
+            user.setLogin("login");
             user.setPassword("1234");
-            manager.persist(user);
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
             throw e;
         }
 
-        User found = dao.findByUserNameLoginAndPassword("John Black", "login1", "1234");
+        User found = dao.findByLoginAndPasswordAndNicName("login", "1234", "Black");
         assertNotNull(found);
         assertEquals(user.getId(), found.getId());
 
         try {
-            dao.findByUserNameLoginAndPassword("Belly", "login1", "eee");
-            fail("User Belly shouldn't be found");
-        } catch (NoResultException expected) {
+            dao.findByLoginAndPasswordAndNicName("login", "1234", "Black");
+            fail("User login shouldn't be found");
+        } catch (NonUniqueResultException expected) {
+
         }
     }
 }
