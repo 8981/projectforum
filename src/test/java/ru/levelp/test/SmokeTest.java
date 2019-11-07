@@ -81,28 +81,4 @@ public class SmokeTest {
 
         Assert.assertNotNull(manager.find(Topic.class, topic.getId()));
     }
-
-    @Test
-    public void queryUser() {
-        User user = new User();
-        user.setUserName("John Black");
-        user.setLogin("login");
-        user.setPassword("123");
-
-        manager.getTransaction().begin();
-        try {
-            manager.persist(user);
-            manager.getTransaction().commit();
-        } catch (Exception e) {
-            manager.getTransaction().rollback();
-            throw e;
-        }
-
-        User found = manager.createQuery("FROM User where login = :log", User.class)
-                .setParameter("log", "login")
-                .getSingleResult();
-
-        Assert.assertEquals("123", found.getPassword());
-        Assert.assertEquals(user.getId(), found.getId());
-    }
 }

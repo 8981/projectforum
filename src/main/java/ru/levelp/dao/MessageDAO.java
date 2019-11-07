@@ -3,6 +3,7 @@ package ru.levelp.dao;
 import ru.levelp.entity.Message;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 
 public class MessageDAO {
 private final EntityManager manager;
@@ -16,9 +17,10 @@ private final EntityManager manager;
         manager.persist(message);
     }
 
-    public Message findByMessage(String message) {
-        return manager.createQuery("FROM Message where message = :message", Message.class)
-                .setParameter("message", message)
-                .getSingleResult();
+
+    public void deleteMessage(long id) {
+        Message message = manager.find(Message.class, id);
+        if (message == null) throw new EntityNotFoundException("Message with id" + id + "is not found");
+        manager.remove(message);
     }
 }

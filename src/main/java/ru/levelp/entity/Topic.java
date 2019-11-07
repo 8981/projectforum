@@ -14,6 +14,9 @@ public class Topic {
     private String topicName;
 
     @OneToMany
+    private List<Topic> topics;
+
+    @OneToMany
     private List<User> members;
 
     @OneToMany
@@ -21,8 +24,9 @@ public class Topic {
 
     public Topic() {}
 
-    public Topic(String topicName, List<User> members, List<Message> messages) {
+    public Topic(String topicName, List<User> members, List<Message> messages, List<Topic> topics) {
         this.topicName = topicName;
+        this.topics = topics;
         this.members = members;
         this.messages = messages;
     }
@@ -41,6 +45,14 @@ public class Topic {
 
     public void setTopicName(String topicName) {
         this.topicName = topicName;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
     }
 
     public List<User> getMembers() {

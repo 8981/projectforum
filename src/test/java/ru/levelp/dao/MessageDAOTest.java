@@ -48,20 +48,7 @@ public class MessageDAOTest {
     }
 
     @Test
-    public void findByMessage() {
+    public void deleteMessage() {
         Message message = new Message();
-        manager.getTransaction().begin();
-        try {
-            message.setMessage("Hi friend");
-            manager.persist(message);
-            manager.getTransaction().commit();
-        } catch (Exception e) {
-            manager.getTransaction().rollback();
-            throw e;
-        }
-
-        Message found = dao.findByMessage("Hi friend");
-        assertNotNull(found);
-        assertEquals(message.getId(), found.getId());
     }
 }
