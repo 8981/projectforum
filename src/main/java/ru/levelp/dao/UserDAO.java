@@ -15,6 +15,13 @@ public class UserDAO {
         manager.persist(user);
     }
 
+    public User findByLogin(String login) {
+        return manager.createQuery(
+                "FROM User where login = :login", User.class)
+                .setParameter("login", login)
+                .getSingleResult();
+    }
+
     public User findByLoginAndPasswordAndNicName(String login, String password, String nicName) {
         return manager.createQuery(
                 "FROM User where login = :login AND password = :password AND nicName =:nicName", User.class)

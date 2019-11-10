@@ -1,7 +1,6 @@
 package ru.levelp.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -16,20 +15,20 @@ public class User {
     @Column(nullable = false, length = 50, unique = true)
     private String password;
 
-    @Column(length = 20, unique = true)
+    @Column(nullable = false, length = 20, unique = true)
     private String nicName;
 
-    @OneToMany
-    private List<Topic> topics;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
 
     public User() {
     }
 
-    public User(String login, String password, String nicName, List<Topic> topics) {
+    public User(String login, String password, String nicName, User user) {
         this.login = login;
         this.password = password;
         this.nicName = nicName;
-        this.topics = topics;
+        this.user = user;
     }
 
     public long getId() {
@@ -64,11 +63,11 @@ public class User {
         this.nicName = nicName;
     }
 
-    public List<Topic> getTopics() {
-        return topics;
+    public User getUser() {
+        return user;
     }
 
-    public void setTopics(List<Topic> topics) {
-        this.topics = topics;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

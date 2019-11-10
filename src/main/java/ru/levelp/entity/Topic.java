@@ -10,30 +10,23 @@ public class Topic {
     @GeneratedValue
     private long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     private String topicName;
 
     @OneToMany
     private List<Message> messages;
 
-    @ManyToOne
-    private User user;
+    @OneToMany
+    private List<Topic> topics;
+
 
     public Topic() {
     }
 
-    public Topic(String topicName,List<Message> messages, User user) {
+    public Topic(String topicName, List<Message> messages, List<Topic> topics) {
         this.topicName = topicName;
         this.messages = messages;
-        this.user = user;
-    }
-
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
+        this.topics = topics;
     }
 
     public long getId() {
@@ -52,11 +45,19 @@ public class Topic {
         this.topicName = topicName;
     }
 
-    public User getUser() {
-        return user;
+    public List<Message> getMessages() {
+        return messages;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
     }
 }
