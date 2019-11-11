@@ -16,6 +16,11 @@ public class TopicDAO {
         manager.persist(topic);
     }
 
+    public Topic delete(Topic topic) {
+        manager.remove(topic);
+        return topic;
+    }
+
     public List<Topic> findById(Topic topic) {
         return manager.createQuery(
                 "FROM Topic where id = :id", Topic.class)
