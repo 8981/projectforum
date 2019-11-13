@@ -13,6 +13,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import java.util.Random;
 
 @WebListener
 public class StartupListener implements ServletContextListener {
@@ -31,6 +32,10 @@ public class StartupListener implements ServletContextListener {
             testUser = new User("login", "password","Black");
 
             dao.create(testUser);
+
+            for (int i = 0; i < 10; ++i) {
+                top.create(new Topic());
+            }
 
             manager.getTransaction().commit();
         } finally {
