@@ -18,17 +18,14 @@ public class User {
     @Column(nullable = false, length = 20, unique = true)
     private String nicName;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
 
     public User() {
     }
 
-    public User(String login, String password, String nicName, User user) {
+    public User(String login, String password, String nicName) {
         this.login = login;
         this.password = password;
         this.nicName = nicName;
-        this.user = user;
     }
 
     public long getId() {
@@ -63,11 +60,4 @@ public class User {
         this.nicName = nicName;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

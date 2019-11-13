@@ -1,6 +1,7 @@
 package ru.levelp.dao;
 
 import ru.levelp.entity.Topic;
+import ru.levelp.entity.User;
 
 import javax.persistence.EntityManager;
 import java.util.List;
