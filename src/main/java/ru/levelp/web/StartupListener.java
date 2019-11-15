@@ -1,60 +1,43 @@
 package ru.levelp.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 import ru.levelp.dao.TopicDAO;
 import ru.levelp.dao.UserDAO;
 import ru.levelp.entity.Topic;
 import ru.levelp.entity.User;
+import javax.persistence.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
-import java.util.Random;
+@Component
+public class StartupListener {
 
-@WebListener
-public class StartupListener implements ServletContextListener {
-    @Override
-    public void contextInitialized(ServletContextEvent event) {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("TestPersistenceUnit");
+    @Autowired
+    private UserDAO dao;
 
-        User testUser;
-        EntityManager manager = factory.createEntityManager();
+    @Autowired
+    private TopicDAO td;
+
+    @Autowired
+    private EntityManager manager;
+
+    @EventListener
+    public void handleContextRefreshEvent(ContextRefreshedEvent ctxStartEvt) {
+        User user;
         manager.getTransaction().begin();
-        UserDAO dao = new UserDAO(manager);
-        TopicDAO top = new TopicDAO(manager);
         try {
-            testUser = dao.findByLogin("test");
+            user = dao.findByLogin("login");
         } catch (NoResultException notFound) {
-            testUser = new User("login", "password","Black");
+            user = new User("login", "1234","Black");
 
-            dao.create(testUser);
+            dao.create(user);
 
             for (int i = 0; i < 10; ++i) {
-                top.create(new Topic());
+                td.create(new Topic());
             }
 
             manager.getTransaction().commit();
-        } finally {
-            manager.close();
         }
-
-        event.getServletContext().setAttribute("factory", factory);
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent event) {
-        EntityManagerFactory factory = getFactory(event.getServletContext());
-
-        if (factory != null) {
-            factory.close();
-        }
-    }
-
-    public static EntityManagerFactory getFactory(ServletContext context) {
-        return (EntityManagerFactory) context.getAttribute("factory");
     }
 }

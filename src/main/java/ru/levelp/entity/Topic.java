@@ -19,14 +19,13 @@ public class Topic {
     @OneToMany
     private List<Topic> topics;
 
-
-    public Topic() {
-    }
-
     public Topic(String topicName, List<Message> messages, List<Topic> topics) {
         this.topicName = topicName;
         this.messages = messages;
         this.topics = topics;
+    }
+
+    public Topic() {
     }
 
     public long getId() {
@@ -52,7 +51,7 @@ public class Topic {
     public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
-
+//
     public List<Topic> getTopics() {
         return topics;
     }

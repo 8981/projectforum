@@ -1,12 +1,16 @@
 package ru.levelp.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ru.levelp.entity.User;
 
 import javax.persistence.EntityManager;
 
+@Repository
 public class UserDAO {
     private EntityManager manager;
 
+    @Autowired
     public UserDAO(EntityManager manager) {
         this.manager = manager;
     }
@@ -29,5 +33,9 @@ public class UserDAO {
                 .setParameter("password", password)
                 .setParameter("nicName", nicName)
                 .getSingleResult();
+    }
+
+    public User findById(int userId) {
+        return manager.find(User.class, userId);
     }
 }
