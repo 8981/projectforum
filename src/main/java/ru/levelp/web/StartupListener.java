@@ -29,7 +29,7 @@ public class StartupListener {
         try {
             user = dao.findByLogin("login");
         } catch (NoResultException notFound) {
-            user = new User("login", "1234","Black");
+            user = new User("login", "1234","Black",new Topic());
 
             dao.create(user);
 

@@ -51,7 +51,7 @@ public class Topic {
     public void setMessages(List<Message> messages) {
         this.messages = messages;
     }
-//
+
     public List<Topic> getTopics() {
         return topics;
     }
