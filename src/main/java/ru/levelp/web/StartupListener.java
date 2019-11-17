@@ -36,7 +36,6 @@ public class StartupListener {
             for (int i = 0; i < 10; ++i) {
                 td.create(new Topic());
             }
-
             manager.getTransaction().commit();
         }
     }

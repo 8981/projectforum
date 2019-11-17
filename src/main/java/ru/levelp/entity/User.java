@@ -18,14 +18,18 @@ public class User {
     @Column(nullable = false, length = 20, unique = true)
     private String nicName;
 
+    @ManyToOne
+    private Topic topic;
+
 
     public User() {
     }
 
-    public User(String login, String password, String nicName) {
+    public User(String login, String password, String nicName, Topic topic) {
         this.login = login;
         this.password = password;
         this.nicName = nicName;
+        this.topic = topic;
     }
 
     public long getId() {
@@ -58,6 +62,14 @@ public class User {
 
     public void setNicName(String nicName) {
         this.nicName = nicName;
+    }
+
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
     }
 
 }
